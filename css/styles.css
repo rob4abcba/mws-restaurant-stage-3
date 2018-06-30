@@ -56,11 +56,27 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 /* ====================== Navigation ====================== */
 nav {
   width: 100%;
-  height: 80px;
+  /* height: 80px; */  /* RL This fixed height messes us up. Want nav to adjust height to fit what we put into it. */
   background-color: #252831;
-  text-align:center;
+
+  /*RL text-align:center; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
 }
+
+/* RL Add hamburger icon to beginning of nav */
+nav div {
+  vertical-align: middle;
+  horizontal-align: left;
+  /* width: 20%; */ /* RL Leave room to right of h1 for hamburger icon. */
+  margin: auto;
+}
+
+
 nav h1 {
+  /* width: 70%; */ /* RL Leave room to right of h1 for hamburger icon. */
   margin: auto;
 }
 nav h1 a {
@@ -71,12 +87,17 @@ nav h1 a {
   text-transform: uppercase;
 }
 #breadcrumb {
-    padding: 10px 40px 16px;
+    /* padding: 10px 40px 16px; *//* RL Too much padding. */
+    padding: 1px 1px 1px;
+
     list-style: none;
     background-color: #eee;
     font-size: 17px;
     margin: 0;
-    width: calc(50% - 80px);
+
+    /* RL Set breadcrumb width same as restaurant-container. */
+    /* RL width: calc(50% - 80px); */
+    width: 40%;
 }
 
 /* Display list items side by side */
@@ -103,15 +124,24 @@ nav h1 a {
     text-decoration: underline;
 }
 /* ====================== Map ====================== */
-/* RL Map shown on top when on Home page showing multiple restaurants on map */#map {
-  height: 400px;
+/* RL Map shown on top when on Home page showing multiple restaurants on map */
+#map {
+  /* RL Change height from absolute to relative. */
+  /* RL height: 400px; */
+  height: 50%;
+  /* RL Slack says I need to set min-height or else map disappears. */
+  min-height: 200px;
+
   width: 100%;
   background-color: #ccc;
 }
 /* ====================== Restaurant Filtering ====================== */
 .filter-options {
   width: 100%;
-  height: 50px;
+
+  /* RL Do NOT hard-code height. Allow height to adjust. */
+  /* RL height: 50px; */
+
   background-color: #3397DB;
   align-items: center;
 }
@@ -143,6 +173,14 @@ nav h1 a {
   margin: 0;
   padding: 30px 15px 60px;
   text-align: center;
+
+  /* RL Start Add flexbox. */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* RL End Add flexbox. */
+
 }
 #restaurants-list li {
   background-color: #fff;
@@ -152,14 +190,39 @@ nav h1 a {
   min-height: 380px;
   padding: 0 30px 25px;
   text-align: left;
-  width: 270px;
+
+  /* RL Start Instead of hard-coding width, allow range betw min- and max-. */
+  /*RL width: 270px; */
+  min-width: 270px;
+  max-width: 300px;
+
+  /*RL Media Queries */
+  @media screen and (min-width: 0px) {
+    #restaurants-list li {
+      max-width: 100%;
+    }
+  }
+  @media screen and (min-width: 700px) {
+    #restaurants-list li {
+      max-width: 45%;
+    }
+  }
+  @media screen and (min-width: 1000px) {
+    #restaurants-list li {
+      max-width: 300px;
+    }
+  }
+  /* RL End */
+
 }
 #restaurants-list .restaurant-img {
   background-color: #ccc;
   display: block;
   margin: 0;
   max-width: 100%;
-  min-height: 248px;
+
+  /* RL Do NOT force min-height, so no longer get tall, narrow images. */
+  /* RL min-height: 248px; */
   min-width: 100%;
 }
 #restaurants-list li h1 {
@@ -199,10 +262,18 @@ nav h1 a {
 .inside #map-container {
   background: blue none repeat scroll 0 0;
   height: 87%;
+
+  /* RL Do we need to add min-height also? */
+  min-height: 200px;
+
   position: fixed;
   right: 0;
   top: 80px;
-  width: 50%;
+
+  /* RL Allow more room for padding. */
+  /* RL width: 50%; */
+  width: 40%;
+
 }
 .inside #map {
   background-color: #ccc;
@@ -247,8 +318,14 @@ nav h1 a {
 #restaurant-container, #reviews-container {
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #fff;
-  padding: 140px 40px 30px;
-  width: 50%;
+
+  /* RL Too much padding. */
+  /* RL padding: 140px 40px 30px; */
+  padding: 1px 1px 1px;
+
+  /* RL Allow more room for padding. */
+  /* RL width: 50%; */
+  width: 40%;
 }
 #reviews-container {
   padding: 30px 40px 80px;
