@@ -11,9 +11,9 @@ body {
 	background-color: #fdfdfd;
 	margin: 0;
 	position:relative;
-  
+
   /* RL After reach max-width, just add margin. */
-  max-width: 900px;
+  max-width: 1100px;
   margin-left: auto;
   margin-right: auto;
 
@@ -44,7 +44,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 #maincontent {
   background-color: #f3f3f3;
   min-height: 100%;
-  
+
   /* RL Add flex. This might not be necessary.  Things stack vertically in a column anyway? */
   display: flex;
   flex-direction: column;
@@ -66,27 +66,34 @@ nav {
 
   /* RL Do NOT hard-code nav height. */
   /* RL height: 80px; */
-  
+
   background-color: #252831;
   text-align:center;
 }
 nav h1 {
   margin: auto;
+
+  /* RL Add padding above and below the nav h1 elements, such as the title RESTAURANT REVIEWS. */
+  padding: 20px 15px;
+
 }
 nav h1 a {
   color: #fff;
-  font-size: 14pt;
+  /* RL Adjust Font Size. */
+  /* RL font-size: 14pt; */
+  font-size: 20px;
+
   font-weight: 200;
   letter-spacing: 10px;
   text-transform: uppercase;
 }
+
+/* RL Breadcrumb allows us path back to Home screen from the Details page. */
 #breadcrumb {
 
-    /* RL Too much padding. */
-    /* RL padding: 10px 40px 16px; */
-    padding: 1px 1px 1px;
-
-
+    /* RL Adjust padding. */
+    padding: 10px 40px 16px;
+    /* RL padding: 1px 1px 1px; */
 
     list-style: none;
     background-color: #eee;
@@ -95,7 +102,11 @@ nav h1 a {
 
     /* RL Set breadcrumb width same as restaurant-container. */
     /* RL width: calc(50% - 80px); */
-    width: 40%;
+    /* RL width: 40%; */
+    /* RL Set breadcrumb max-width but not width. */
+    max-width: 100%
+
+
 }
 
 /* Display list items side by side */
@@ -104,8 +115,8 @@ nav h1 a {
 }
 
 /* Add a slash symbol (/) before/behind each list item */
-#breadcrumb l
-i+li:before {
+
+#breadcrumb li+li:before {
     padding: 8px;
     color: black;
     content: "/\00a0";
@@ -129,7 +140,7 @@ i+li:before {
   height: 50%;
   /* RL Need min-height or else no map will show up. */
   min-height: 200px;
-  
+
   width: 100%;
   background-color: #ccc;
 }
@@ -142,6 +153,10 @@ i+li:before {
 
   background-color: #3397DB;
   align-items: center;
+
+  /* RL Add padding. */
+  padding: 10px 0;
+
 }
 .filter-options h2 {
   color: white;
@@ -154,7 +169,11 @@ i+li:before {
   background-color: white;
   border: 1px solid #fff;
   font-family: Arial,sans-serif;
-  font-size: 11pt;
+
+  /* RL Adjust font-size of Neighborhoods & Cuisines Selections. */
+  /*RL font-size: 11pt; */
+  font-size: 15px;
+
   height: 35px;
   letter-spacing: 0;
   margin: 1
@@ -186,7 +205,12 @@ i+li:before {
   margin: 15px;
   min-heigh
   t: 380px;
-  padding: 0 30px 25px;
+
+  /* RL Adjust padding. */
+  /* RL If the padding property has three values:  (top, right/left, bottom) */
+  /* RL padding: 0 30px 25px; */
+  padding: 0 0 25px;
+
   text-align: left;
 
   /* RL Instead of setting width, set min-width and max-width. */
@@ -222,7 +246,16 @@ i+li:before {
   /* RL min-height causes the image to be tall and narrow. */
   /* RL min-height: 248px; */
   min-width: 100%;
+
+  /* RL overflow hidden. If content overflows box, hide the part that overflows (i.e. clip it) */
+  overflow: hidden;
 }
+
+/* RL Doug Brown defined restaurant-text-area. Add css to specify format of restaurant-text-area */
+#restaurants-list .restaurant-text-area {
+  padding: 0 25px;
+}
+
 #restaurants-list li h1 {
   color: #f18200;
   font-family: Arial,sans-serif;
@@ -230,13 +263,23 @@ i+li:before {
   font-weight: 200;
   letter-spacing: 0;
   line-height: 1.3;
-  margin: 20px 0 10px;
+
+  /* RL Need margin for left/right. */
+  /* RL margin: 20px 0 10px; */
+  margin: 20px 10px 10px;
+
   text-transform: uppercase;
 }
 #restaurants-list p {
-  margin: 0;
+  /* RL Add some margin. */
+  /* RL margin: 0; */
+  margin: 10px;
   font-size: 11pt;
 }
+
+
+
+
 #restaurants-list li a {
   background-color: orange;
   border-bottom: 3px solid #eee;
@@ -252,23 +295,28 @@ i+li:before {
 }
 
 /* ====================== Restaurant Details ====================== */
+
+/* RL Doug Brown said get rid of the entire .inside header CSS.
 .inside header {
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
 }
+*/
+
 .inside #map-container {
   background: blue none repeat scroll 0 0;
-  height: 87%;
+
+  /* RL Map container height fix at just right height so human can read. */
+  /* RL height: 87%; */
+  height: 400px;
+
+  /* RL Get rid of the stuff below that fixed map at right of screen.
   position: fixed;
   right: 0;
   top: 80px;
-
-  /* RL 
-  Allow more room for padding. */
-  /* RL width: 50%; */
-  width: 40%;
+  width: 50%; */
 
 }
 .inside #map {
@@ -320,10 +368,11 @@ i+li:before {
   /* RL padding: 140px 40px 30px; */
   padding: 1px 1px 1px;
 
-  /* RL 
-  Allow more room for padding. */
+  /* RL Let width be 100%. */
   /* RL width: 50%; */
-  width: 40%;
+
+  /* RL Limit max-height to 300px. This cut off the bottom of the image. */
+  /* RL max-height: 300px; */
 
 }
 #reviews-co
