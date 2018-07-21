@@ -410,3 +410,18 @@ ntainer {
 #restaurant-hours td {
   color: #666;
 }
+
+
+/* RL Skip link starts off-screen -40px and only gets on-screen 0px after it gains focus. */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #bf1722;
+  color: white;
+  padding: 8px;
+  z-index: 100;
+}
+.skip-link:focus {
+  top: 0;
+}

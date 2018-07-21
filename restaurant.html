@@ -24,6 +24,9 @@
 <body class="inside">
   <!-- Beginning header -->
   <header>
+    <!-- RL Add skip link so handicapped need just 1 click to skip nav and go straight to main content. -->
+    <a href="#maincontent" class="skip-link">Skip to main content</a>
+
     <!-- Beginning nav -->
     <nav>
       <h1><a href="/">Restaurant Reviews</a></h1>
@@ -43,7 +46,8 @@
   <!-- End header -->
 
   <!-- Beginning main -->
-  <main id="maincontent">
+  <!-- RL For older browsers which don't move focus when named anchors are clicked, must add a tabindex -1. -->
+  <main id="maincontent" tabindex="-1">
     <!-- Beginning map -->
     <section id="map-container">
       <div id="map" role=application></div>
