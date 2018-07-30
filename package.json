@@ -1,0 +1,28 @@
+{
+  "name": "mws-restaurant-stage-1",
+  "version": "1.0.0",
+  "description": "descriptionRL",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rob4abcba/mws-restaurant-stage-1.git"
+  },
+  "keywords": [
+    "gulp",
+    "mws",
+    "restaurant",
+    "stage1"
+  ],
+  "author": "rob4abcba",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rob4abcba/mws-restaurant-stage-1/issues"
+  },
+  "homepage": "https://github.com/rob4abcba/mws-restaurant-stage-1#readme",
+  "devDependencies": {
+    "gulp": "^4.0.0"
+  }
+}
