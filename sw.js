@@ -1,4 +1,4 @@
-// RL This sw.js is NOT used.  Use the sw.js one level up in ROOT directory.
+// RL Use this sw.js file that is in ROOT directory
 var CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
   '/',
