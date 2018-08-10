@@ -7,6 +7,7 @@ var markers = []
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
+console.log('Before document.addEventListener: ');
 document.addEventListener('DOMContentLoaded', (event) => {
   initMap(); // added
   fetchNeighborhoods();
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 /**
  * Fetch all neighborhoods and set their HTML.
  */
+console.log('Before fetchNeighborhoods = () =>: ');
 fetchNeighborhoods = () => {
   DBHelper.fetchNeighborhoods((error, neighborhoods) => {
     if (error) { // Got an error
@@ -71,6 +73,7 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
 /**
  * Initialize leaflet map, called from HTML.
  */
+console.log('main.js: Before initMap = () =>: ');
 initMap = () => {
   self.newMap = L.map('map', {
         center: [40.722216, -73.987501],
@@ -165,7 +168,12 @@ createRestaurantHTML = (restaurant) => {
   /**
    * RL Give alt text to image
    */
+  /**
+   * Reviewer: Yes, this is the way we should use alternate texts dynamically. Great!! You need to fix similarly for the restaurant details page.
+   */
   image.alt = "photo of " + restaurant.name + " restaurant";
+  console.log('RL4: image.alt: ', image.alt);
+
   li.append(image);
 
 

@@ -4,6 +4,7 @@ var newMap;
 /**
  * Initialize map as soon as the page is loaded.
  */
+console.log('restaurant_info.js: Before document.addEventListener');
 document.addEventListener('DOMContentLoaded', (event) => {
   initMap();
 });
@@ -16,6 +17,7 @@ initMap = () => {
     if (error) { // Got an error!
       console.error(error);
     } else {
+      console.log('Before self.newMap = L.map: ');
       self.newMap = L.map('map', {
         center: [restaurant.latlng.lat, restaurant.latlng.lng],
         zoom: 16,
@@ -65,13 +67,16 @@ fetchRestaurantFromURL = (callback) => {
     error = 'No restaurant id in URL'
     callback(error, null);
   } else {
+    console.log('Before DBHelper.fetchRestaurantById: ');
     DBHelper.fetchRestaurantById(id, (error, restaurant) => {
       self.restaurant = restaurant;
       if (!restaurant) {
         console.error(error);
         return;
       }
+      console.log('Before fillRestaurantHTML: ');
       fillRestaurantHTML();
+      console.log('After fillRestaurantHTML:  ');
       callback(null, restaurant)
     });
   }
@@ -90,7 +95,16 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.alt = "photo of " + restaurant.name + " restaurant";
+  window.alert(image.alt);
+  console.log(image.alt);
+  console.log('RL4: image.alt: ', image.alt);
 
+
+  /* RL Not sure about next line I added. */
+  name.append(address);
+  window.alert(name);
+  console.log(name);
   /* RL TODO Add code for responsive image sizing. */
 
   const cuisine = document.getElementById('restaurant-cuisine');

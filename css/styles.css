@@ -202,9 +202,8 @@ nav h1 a {
   background-color: #fff;
   border: 2px solid #ccc;
   font-family: Arial,sans-serif;
-  margin: 15px;
-  min-heigh
-  t: 380px;
+  margin: 2px;
+  min-height: 380px;
 
   /* RL Adjust padding. */
   /* RL If the padding property has three values:  (top, right/left, bottom) */
@@ -232,7 +231,7 @@ nav h1 a {
 }
 @media only screen and (min-width: 1100px) {
   #restaurants-list li {
-    max-width: 300px;
+    max-width: 30%;
   }
 }
 
