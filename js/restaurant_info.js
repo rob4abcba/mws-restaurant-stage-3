@@ -1,5 +1,12 @@
 let restaurant;
-var newMap;
+
+/**
+ * RL: Reviewer said to replace ES5:var with ES6:let or const.
+ */
+let newMap;
+/* RL   var newMap;  */
+
+
 
 /**
  * Initialize map as soon as the page is loaded.

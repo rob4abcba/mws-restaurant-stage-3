@@ -155,7 +155,13 @@ nav h1 a {
   align-items: center;
 
   /* RL Add padding. */
-  padding: 10px 0;
+  padding: 1px 0;
+
+    /* RL Add flex */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 
 }
 .filter-options h2 {
@@ -163,7 +169,7 @@ nav h1 a {
   font-size: 1rem;
   font-weight: normal;
   line-height: 1;
-  margin: 0 20px;
+  margin: 0 2px;
 }
 .filter-options select {
   background-color: white;
@@ -184,11 +190,11 @@ nav h1 a {
 
 /* ====================== Restaurant Listing ====================== */
 #restaurants-list {
-  background-color: #f3f3f3;
+  background-color: #EE82EE;
   list-style: outside none none;
   margin: 0
   ;
-  padding: 30px 15px 60px;
+  padding: 1px 0px 1px;
   text-align: center;
 
   /* RL Add flex */
@@ -200,22 +206,24 @@ nav h1 a {
 }
 #restaurants-list li {
   background-color: #fff;
-  border: 2px solid #ccc;
+  border: 1px 1px 1px solid #008000;
   font-family: Arial,sans-serif;
-  margin: 2px;
+  margin: 1px 0px 1px;
   min-height: 380px;
 
   /* RL Adjust padding. */
   /* RL If the padding property has three values:  (top, right/left, bottom) */
   /* RL padding: 0 30px 25px; */
-  padding: 0 0 25px;
+  padding: 1px 1px 1px;
 
-  text-align: left;
+  text-align: center;
 
   /* RL Instead of setting width, set min-width and max-width. */
   /* RL width: 270px; */
-  min-width: 270px;
+
+  /* RL min-width: 270px;
   max-width: 300px;
+  */
 
 }
 
@@ -226,12 +234,12 @@ nav h1 a {
 }
 @media only screen and (min-width: 700px) and (max-width: 1099px) {
   #restaurants-list li {
-    max-width: 45%
+    max-width: 49.5%
   }
 }
 @media only screen and (min-width: 1100px) {
   #restaurants-list li {
-    max-width: 30%;
+    max-width: 32.8%;
   }
 }
 
