@@ -19,7 +19,7 @@ class DBHelper {
     return `http://localhost:${port}/restaurants`;
   }
 
-  // RL TODO Add static get DATABASE_REVIEWS_URL() here.
+  // RL TODO Add static get DATABASE_REVIEWS_URL() here. (RL: For stage3?)
 
   /**
    * Fetch all restaurants.
@@ -193,7 +193,11 @@ class DBHelper {
   static imageUrlForRestaurant(restaurant) {
     // RL TODO Maybe check for restaurant.photograph here and return URL with ${type} to path based on it.
     // RL return (`/img/${restaurant.photograph}`);
-    return (`/img/${restaurant.photograph}.jpg`);
+    // RL debugger;
+    // RL console.log(${restaurant.photograph});
+    // RL return (`/img/${restaurant.photograph}.jpg`);
+    return (`/img/${restaurant.id}.jpg`);
+
 
   }
 
