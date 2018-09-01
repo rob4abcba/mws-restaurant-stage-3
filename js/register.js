@@ -1,7 +1,7 @@
 /**
  * From https://developers.google.com/web/fundamentals/primers/service-workers/
  */
-
+console.log('Just entered register.js');
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {

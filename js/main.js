@@ -7,6 +7,7 @@ var markers = []
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
+console.log('Fetch neighborhoods and cuisines as soon as the page is loaded.');
 console.log('Before document.addEventListener: ');
 document.addEventListener('DOMContentLoaded', (event) => {
   initMap(); // added
@@ -153,12 +154,15 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     ul.append(createRestaurantHTML(restaurant));
   });
+  console.log('Before addMarkersToMap');
   addMarkersToMap();
+  console.log('After addMarkersToMap');
 }
 
 /**
  * Create restaurant HTML.
  */
+console.log('Before createRestaurantHTML');
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
 
@@ -201,6 +205,7 @@ createRestaurantHTML = (restaurant) => {
   const more = document.createElement('a');
   more.innerHTML = 'View Details for ' + restaurant.name;
   more.href = DBHelper.urlForRestaurant(restaurant);
+  console.log('RL: more.href: ', more.href);
   li.append(more)
 
   return li
@@ -209,6 +214,7 @@ createRestaurantHTML = (restaurant) => {
 /**
  * Add markers for current restaurants to the map.
  */
+console.log('Add markers for current restaurants to the map.');
 addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     // Add marker to the map

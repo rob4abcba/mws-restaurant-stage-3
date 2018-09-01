@@ -4,19 +4,23 @@ var urlsToCache = [
   '/',
   '/index.html',
   '/restaurant.html',
-  '/js/main.js',
+
   '/js/dbhelper.js',
   '/js/restaurant_info.js',
   '/css/styles.css',
   '/data/restaurants.json'
 ];
 
+// RL Temporarily take this out '/js/main.js',
+
+
+
 self.addEventListener('install', function(event) {
   // Perform install steps
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        console.log('RL: Opened cache');
+        console.log('RL: urlsToCache = ', urlsToCache);
         return cache.addAll(urlsToCache);
       })
   );
