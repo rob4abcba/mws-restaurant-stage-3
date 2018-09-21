@@ -22,10 +22,14 @@ console.log('Before fetchNeighborhoods = () =>: ');
 fetchNeighborhoods = () => {
   DBHelper.fetchNeighborhoods((error, neighborhoods) => {
     if (error) { // Got an error
-      console.error(error);
+      // RL Change next line
+      // RL console.error(error);
+      console.log(error);
     } else {
       self.neighborhoods = neighborhoods;
+      console.log('Before fillNeighborhoodsHTML(); ');
       fillNeighborhoodsHTML();
+      console.log('After fillNeighborhoodsHTML(); ');
     }
   });
 }
@@ -49,7 +53,9 @@ fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
 fetchCuisines = () => {
   DBHelper.fetchCuisines((error, cuisines) => {
     if (error) { // Got an error!
-      console.error(error);
+      // RL Change next line
+      // RL console.error(error);
+      console.log(error);
     } else {
       self.cuisines = cuisines;
       fillCuisinesHTML();
@@ -121,7 +127,9 @@ updateRestaurants = () => {
 
   DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
     if (error) { // Got an error!
-      console.error(error);
+      // RL Change next line
+      // RL console.error(error);
+      console.log(error);
     } else {
       resetRestaurants(restaurants);
       fillRestaurantsHTML();
@@ -154,6 +162,7 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     ul.append(createRestaurantHTML(restaurant));
   });
+  // RL debugger;
   console.log('Before addMarkersToMap');
   addMarkersToMap();
   console.log('After addMarkersToMap');
@@ -225,6 +234,7 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     }
     self.markers.push(marker);
   });
+  // RL debugger;
 
 }
 /* addMarkersToMap = (restaurants = self.restaurants) => {

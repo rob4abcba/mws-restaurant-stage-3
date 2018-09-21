@@ -21,28 +21,37 @@ self.addEventListener('install', function(event) {
     caches.open(CACHE_NAME)
       .then(function(cache) {
         console.log('RL: urlsToCache = ', urlsToCache);
+        console.log('RL: cache.addAll(urlsToCache) = ', cache.addAll(urlsToCache));
         return cache.addAll(urlsToCache);
       })
   );
 });
 
 
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      }
-    )
-  );
-});
+// self.addEventListener('fetch', function(event) {
+
+//   event.respondWith(
+//     caches.match(event.request)
+//       .then(function(response) {
+//         // Cache hit - return response
+//         if (response) {
+//           console.log('RL: response = ', response);
+//           return response;
+//         }
+//         console.log('RL: fetch(event.request) = ', fetch(event.request));
+//         return fetch(event.request);
+//       }
+//     )
+//   );
+// });
 
 
 self.addEventListener('fetch', function(event) {
+
+  const reqURL = new URL(event.request.url);
+
+  if (reqURL.port === '1337') return;
+
   event.respondWith(
     caches.match(event.request)
       .then(function(response) {
