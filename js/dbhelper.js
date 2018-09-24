@@ -74,8 +74,6 @@ var idbApp = (function() {
       const store = tx.objectStore('restaurants');
       // RL no index so instead of index.openCursor(range) use store.get(parseInt(id))
       return store.get(parseInt(id));
-      }).then(function(restaurantObject) {
-        return restaurantObject;
       }).catch(function(e) {
       console.log("idbApp.fetchRestaurantById errored out:", e);
     });
@@ -113,6 +111,7 @@ class DBHelper {
     // RL  const port = 8000 // Change this to your server port
     const port = 1337;
     console.log("port1 = ",port);
+    
     // RL return `http://localhost:${port}/data/restaurants.json`;
     return `http://localhost:${port}/restaurants`;
   }
@@ -148,36 +147,37 @@ class DBHelper {
     xhr.send();
   */
 
-  // RL First check whether we have restaurants data already in indexedDB
-  idbApp.addRestaurants(callback);
   // RL If no restaurants yet, then fetch restaurant JSON from the sails server
-  if (!restaurants) {
+  console.log("restaurants = ",window.restaurants);
+  if (!window.restaurants) {
 
+      // RL First check whether we have restaurants data already in indexedDB
+  idbApp.addRestaurants(callback);
 // RL Using fetch
     // RL Back-ticks enclose template literal. The ${expression} indicates placeholder.
     // RL The expression in the placeholder gets passed to the function fetch in this case.
     // MG No need for template literal here if there's no other parts to the string except this one template literal.
     // RL fetch(`${DBHelper.DATABASE_URL}`)
-    fetch(DBHelper.DATABASE_URL)
-    .then(function(response) {
-      // RL Got next if block from Introduction to fetch() article
-      if (response.status !== 200) {
-        console.log('Looks like there was a problem. Status Code: ' +
-          response.status);
-        return;
-      }
-      // RL Add next 2 console.log
-      console.log('Yooooo, response.status = ', response.status);
-      // RL Cannot read response.json() in console.log statement because
-      // RL will cause TypeError that response data already read when
-      // RL try to read response.json() again in the return statement.
-      // RL console.log('Baby, the response.json() = ', response.json());
-      return response.json();
-    })
-    .then(data => callback(null, data))
-    // RL Replace template literal with regular string
-    // RL .catch(error => callback(`Request failed. Returned status of ${error,statusText}`, null));
-    .catch(error => callback(error, null));
+    // fetch(DBHelper.DATABASE_URL)
+    // .then(function(response) {
+    //   // RL Got next if block from Introduction to fetch() article
+    //   if (response.status !== 200) {
+    //     console.log('Looks like there was a problem. Status Code: ' +
+    //       response.status);
+    //     return;
+    //   }
+    //   // RL Add next 2 console.log
+    //   console.log('Yooooo, response.status = ', response.status);
+    //   // RL Cannot read response.json() in console.log statement because
+    //   // RL will cause TypeError that response data already read when
+    //   // RL try to read response.json() again in the return statement.
+    //   // RL console.log('Baby, the response.json() = ', response.json());
+    //   return response.json();
+    // })
+    // .then(data => callback(null, data))
+    // // RL Replace template literal with regular string
+    // // RL .catch(error => callback(`Request failed. Returned status of ${error,statusText}`, null));
+    // .catch(error => callback(error, null));
   }
 }
 /* */
@@ -188,18 +188,21 @@ class DBHelper {
    */
   static fetchRestaurantById(id, callback) {
     // fetch all restaurants with proper error handling.
-    DBHelper.fetchRestaurants((error, restaurants) => {
-      if (error) {
-        callback(error, null);
-      } else {
-        const restaurant = restaurants.find(r => r.id == id); // RL TODO Should I change this line?
-        if (restaurant) { // Got the restaurant
-          callback(null, restaurant);
-        } else { // Restaurant does not exist in the database
-          callback('Restaurant does not exist', null);
-        }
-      }
-    }); // RL TODO Might need id here
+    // DBHelper.fetchRestaurants((error, restaurants) => {
+    //   if (error) {
+    //     callback(error, null);
+    //   } else {
+    //     const restaurant = restaurants.find(r => r.id == id); // RL TODO Should I change this line?
+    //     if (restaurant) { // Got the restaurant
+    //       callback(null, restaurant);
+    //     } else { // Restaurant does not exist in the database
+    //       callback('Restaurant does not exist', null);
+    //     }
+    //   }
+    // }); // RL TODO Might need id here
+
+    idbApp.getByID(id)
+      .then((restaurant) => callback(null, restaurant));
   }
 
   // RL TODO Add static fetchRestaurantReviewsById(id, callback) here.
@@ -334,7 +337,7 @@ class DBHelper {
       alt: restaurant.name,
       url: DBHelper.urlForRestaurant(restaurant)
       })
-      marker.addTo(newMap);
+      marker.addTo(self.newMap);
     return marker;
   }
   /* static mapMarkerForRestaurant(restaurant, map) {

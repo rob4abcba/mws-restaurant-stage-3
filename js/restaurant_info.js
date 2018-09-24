@@ -13,13 +13,14 @@ let newMap;
  */
 console.log('restaurant_info.js: Before document.addEventListener');
 document.addEventListener('DOMContentLoaded', (event) => {
+  console.log(L);
   initMap();
 });
 
 /**
  * Initialize leaflet map
  */
-initMap = () => {
+const initMap = () => {
   fetchRestaurantFromURL((error, restaurant) => {
     if (error) { // Got an error!
       console.error(error);
@@ -38,7 +39,7 @@ initMap = () => {
           '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
           'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         id: 'mapbox.streets'
-      }).addTo(newMap);
+      }).addTo(self.newMap);
       fillBreadcrumb();
       DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
     }
@@ -81,9 +82,7 @@ fetchRestaurantFromURL = (callback) => {
         console.error(error);
         return;
       }
-      console.log('Before fillRestaurantHTML: ');
       fillRestaurantHTML();
-      console.log('After fillRestaurantHTML:  ');
       callback(null, restaurant)
     });
   }
@@ -103,15 +102,17 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   image.className = 'restaurant-img'
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.alt = "photo of " + restaurant.name + " restaurant";
-  window.alert(image.alt);
-  console.log(image.alt);
-  console.log('RL4: image.alt: ', image.alt);
+
+  console.log('image.alt = ', image.alt);
+  window.alert('image.alt = ' + image.alt);
 
 
   /* RL Not sure about next line I added. */
   name.append(address);
-  window.alert(name);
-  console.log(name);
+  
+  console.log('name = ', name);
+  window.alert('name = ' + name);
+
   /* RL TODO Add code for responsive image sizing. */
 
   const cuisine = document.getElementById('restaurant-cuisine');
