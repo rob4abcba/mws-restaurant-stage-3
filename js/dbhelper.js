@@ -62,8 +62,8 @@ var idbApp = (function() {
           let restaurantValStore = db.transaction('restaurants').objectStore('restaurants');
           restaurantValStore.getAll()
             .then(restaurants => callback(null, restaurants));
+        })
       })
-    })
   }
 
   // RL get restaurant by id -- using get(parseInt(id))
@@ -95,7 +95,7 @@ var idbApp = (function() {
     getByID: getByID,
     getAll: getAll
   };
-})();
+})(); // RL Why first ) not show where matching ( is?
 
 
 // RL *************************************************
@@ -122,24 +122,24 @@ class DBHelper {
   // RL get error idb not defined
   static dbPromiseLz() {
     return idb.open('restaurant-review', 2, function(upgradeDb) {
-     switch (upgradeDb.oldVersion) {
-      case 0:
-        // a placeholder case so that the switch block will
-        // execute when the database is first created
-        // (oldVersion is 0)
-        // RL debugger;
-        console.log('case 0');
-        upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
-      case 1:
-        //RL debugger;
-        console.log('case 1');
-        const reviewsStore = upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
+      switch (upgradeDb.oldVersion) {
+        case 0:
+          // a placeholder case so that the switch block will
+          // execute when the database is first created
+          // (oldVersion is 0)
+          // RL debugger;
+          console.log('case 0');
+          upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
+        case 1:
+          //RL debugger;
+          console.log('case 1');
+          const reviewsStore = upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
 
-        // RL From https://developer.mozilla.org/en-US/docs/Web/API/IDBObjectStore/createIndex
-        reviewsStore.createIndex('restaurant', 'restaurant' {unique: false}); // ???
-
-    }
-  })};
+          // RL From https://developer.mozilla.org/en-US/docs/Web/API/IDBObjectStore/createIndex
+          reviewsStore.createIndex('restaurant', 'restaurant'); // ???
+      }
+    })
+  }
 
   /**
    * Fetch all restaurants.
@@ -170,13 +170,13 @@ class DBHelper {
     xhr.send();
   */
 
-  // RL If no restaurants yet, then fetch restaurant JSON from the sails server
-  console.log("restaurants = ",window.restaurants);
-  if (!window.restaurants) {
+    // RL If no restaurants yet, then fetch restaurant JSON from the sails server
+    console.log("restaurants = ",window.restaurants);
+    if (!window.restaurants) {
 
       // RL First check whether we have restaurants data already in indexedDB
-  idbApp.addRestaurants(callback);
-// RL Using fetch
+    idbApp.addRestaurants(callback);
+    // RL Using fetch
     // RL Back-ticks enclose template literal. The ${expression} indicates placeholder.
     // RL The expression in the placeholder gets passed to the function fetch in this case.
     // MG No need for template literal here if there's no other parts to the string except this one template literal.
@@ -201,8 +201,8 @@ class DBHelper {
     // // RL Replace template literal with regular string
     // // RL .catch(error => callback(`Request failed. Returned status of ${error,statusText}`, null));
     // .catch(error => callback(error, null));
+    }
   }
-}
 /* */
 
 
@@ -345,14 +345,12 @@ class DBHelper {
     // RL console.log(${restaurant.photograph});
     // RL return (`/img/${restaurant.photograph}.jpg`);
     return (`/img/${restaurant.id}.jpg`);
-
-
   }
 
   /**
    * Map marker for a restaurant.
    */
-   static mapMarkerForRestaurant(restaurant, map) {
+  static mapMarkerForRestaurant(restaurant, map) {
     // RL TODO The section below will be different if use GoogleMaps instead of MapBox
     // https://leafletjs.com/reference-1.3.0.html#marker
     const marker = new L.marker([restaurant.latlng.lat, restaurant.latlng.lng],
@@ -374,7 +372,7 @@ class DBHelper {
     return marker;
   } */
 
-}
+}  // RL Why this } not show where matching { is ?
 
 // RL TODO Add static getStaticAllRestaurantsMapImage(restaurants)
 // RL TODO Add static addPendingRequestToQueue(url, method, body)
