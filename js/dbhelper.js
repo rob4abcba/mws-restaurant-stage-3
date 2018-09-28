@@ -117,6 +117,29 @@ class DBHelper {
   }
 
   // RL TODO Add static get DATABASE_REVIEWS_URL() here. (RL: For stage3?)
+  
+  // RL open database (from Working with IndexedDB & Lab: IndexedDB)
+  // RL get error idb not defined
+  static dbPromiseLz() {
+    return idb.open('restaurant-review', 2, function(upgradeDb) {
+     switch (upgradeDb.oldVersion) {
+      case 0:
+        // a placeholder case so that the switch block will
+        // execute when the database is first created
+        // (oldVersion is 0)
+        // RL debugger;
+        console.log('case 0');
+        upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
+      case 1:
+        //RL debugger;
+        console.log('case 1');
+        const reviewsStore = upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
+
+        // RL From https://developer.mozilla.org/en-US/docs/Web/API/IDBObjectStore/createIndex
+        reviewsStore.createIndex('restaurant', 'restaurant' {unique: false}); // ???
+
+    }
+  })};
 
   /**
    * Fetch all restaurants.
