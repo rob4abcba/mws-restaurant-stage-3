@@ -61,7 +61,9 @@ var idbApp = (function() {
           // RL Combined let tx = and let restaurantValStore = steps into one line below.
           let restaurantValStore = db.transaction('restaurants').objectStore('restaurants');
           restaurantValStore.getAll()
-            .then(restaurants => callback(null, restaurants));
+            // RL .then(restaurants => callback(null, restaurants));
+            .then(restaurants => (null, restaurants));
+              
         })
       })
   }
@@ -133,12 +135,12 @@ class DBHelper {
         case 1:
           //RL debugger;
           console.log('case 1');
-          const reviewsStore = upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
+          const reviewsStore = upgradeDb.createObjectStore('reviews', {keyPath: 'id'});
 
           // RL From https://developer.mozilla.org/en-US/docs/Web/API/IDBObjectStore/createIndex
-          reviewsStore.createIndex('restaurant', 'restaurant'); // ???
+          reviewsStore.createIndex('restaurant', 'restaurant_id'); // ???
       }
-    })
+    }); // RL Put a semicolon here or not ???
   }
 
   /**
@@ -147,6 +149,8 @@ class DBHelper {
 
   // RL TODO Will need to also pass id as a parameter to function fetchRestaurants.
   static fetchRestaurants(callback) {
+
+    // RL 1st method
 
   /* RL Comment out this entire xhr block and replace with fetch block
     //RL TODO Replace xhr with fetchURL
@@ -174,8 +178,12 @@ class DBHelper {
     console.log("restaurants = ",window.restaurants);
     if (!window.restaurants) {
 
+      // RL 2nd method
       // RL First check whether we have restaurants data already in indexedDB
     idbApp.addRestaurants(callback);
+    
+
+    // RL 3rd method
     // RL Using fetch
     // RL Back-ticks enclose template literal. The ${expression} indicates placeholder.
     // RL The expression in the placeholder gets passed to the function fetch in this case.
@@ -201,8 +209,34 @@ class DBHelper {
     // // RL Replace template literal with regular string
     // // RL .catch(error => callback(`Request failed. Returned status of ${error,statusText}`, null));
     // .catch(error => callback(error, null));
+
+    // RL 4th method
+
+
     }
   }
+
+// RL *********
+
+static fetchAndCacheRestaurantsLz() {
+  return fetch(DBHelper.DATABASE_URL + 'restaurants')
+    .then(response => response.json())
+    .then(restaurants => {
+      return this.dbPromiseLz()
+        .then(db => {
+          const tx = db.transaction('restaurants', 'readwrite');
+          const restaurantStore = tx.objectStore('restaurants');
+          restaurants.forEach(restaurant => restaurantStore.put(restaurant));
+          return tx.complete.then(() => Promise.resolve(restaurants));
+        });
+    });
+}
+
+
+// RL **********
+
+
+
 /* */
 
 
@@ -373,6 +407,8 @@ class DBHelper {
   } */
 
 }  // RL Why this } not show where matching { is ?
+console.log("At bottom of dbhelper.js");
+console.log("fetchRestaurants => ", DBHelper.fetchRestaurants());
 
 // RL TODO Add static getStaticAllRestaurantsMapImage(restaurants)
 // RL TODO Add static addPendingRequestToQueue(url, method, body)
