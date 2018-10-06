@@ -113,32 +113,38 @@ class DBHelper {
     // RL  const port = 8000 // Change this to your server port
     const port = 1337;
     console.log("port1 = ",port);
-    
-    // RL return `http://localhost:${port}/data/restaurants.json`;
-    return `http://localhost:${port}/restaurants`;
+
+    // RL stage1 return `http://localhost:${port}/data/restaurants.json`;
+    // RL stage2 return `http://localhost:${port}/restaurants`;
+    // RL stage3 remove the restaurants endpt bec it could be reviews endpt.
+    return `http://localhost:${port}/`; 
   }
 
   // RL TODO Add static get DATABASE_REVIEWS_URL() here. (RL: For stage3?)
-  
+  static get DATABASE_REVIEWS_URL() {
+    const port = 1337;
+    console.log("port2 = ",port);
+    // RL stage2 return `http://localhost:${port}/restaurants`;
+    return `http://localhost:${port}/reviews`; 
+  }
+
   // RL open database (from Working with IndexedDB & Lab: IndexedDB)
-  // RL get error idb not defined
-  static dbPromiseLz() {
-    return idb.open('restaurant-review', 2, function(upgradeDb) {
+  static dbPromise() {
+    return idb.open('db', 2, function(upgradeDb) {
       switch (upgradeDb.oldVersion) {
         case 0:
           // a placeholder case so that the switch block will
           // execute when the database is first created
           // (oldVersion is 0)
           // RL debugger;
-          console.log('case 0');
+          // RL console.log('case 0');
           upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
         case 1:
           //RL debugger;
-          console.log('case 1');
+          // RL console.log('case 1');
           const reviewsStore = upgradeDb.createObjectStore('reviews', {keyPath: 'id'});
-
           // RL From https://developer.mozilla.org/en-US/docs/Web/API/IDBObjectStore/createIndex
-          reviewsStore.createIndex('restaurant', 'restaurant_id'); // ???
+          reviewsStore.createIndex('restaurant', 'restaurant_id');
       }
     }); // RL Put a semicolon here or not ???
   }
@@ -147,17 +153,17 @@ class DBHelper {
    * Fetch all restaurants.
    */
 
+
   // RL TODO Will need to also pass id as a parameter to function fetchRestaurants.
-  static fetchRestaurants(callback) {
-
-    // RL 1st method
-
+  static fetchRestaurants1(callback) {
+    // RL First check whether we have restaurants data already in indexedDB
+    console.log("restaurants = ",window.restaurants);
+    if (!window.restaurants) {
+  // RL If no restaurants yet, then fetch restaurant JSON from the sails server
+  // RL 1st method
   /* RL Comment out this entire xhr block and replace with fetch block
-    //RL TODO Replace xhr with fetchURL
     let xhr = new XMLHttpRequest();
     xhr.open('GET', DBHelper.DATABASE_URL);
-    // RL TODO fetch will use DBHelper.DATABASE_URL and then method: "GET"
-    // RL TODO Comment out the rest of this xhr stuff once I get fetch working.
     xhr.onload = () => {
       if (xhr.status === 200) { // Got a success response from server!
         console.log("xhr.responseText = ", xhr.responseText);
@@ -166,7 +172,6 @@ class DBHelper {
         const restaurants = json.restaurants;
         callback(null, restaurants);
       } else { // Oops!. Got an error from server.
-        console.log("ERROR BABY");
         const error = (`Request failed. Returned status of ${xhr.status}`);
         callback(error, null);
       }
@@ -174,16 +179,8 @@ class DBHelper {
     xhr.send();
   */
 
-    // RL If no restaurants yet, then fetch restaurant JSON from the sails server
-    console.log("restaurants = ",window.restaurants);
-    if (!window.restaurants) {
+  // RL 2nd method
 
-      // RL 2nd method
-      // RL First check whether we have restaurants data already in indexedDB
-    idbApp.addRestaurants(callback);
-    
-
-    // RL 3rd method
     // RL Using fetch
     // RL Back-ticks enclose template literal. The ${expression} indicates placeholder.
     // RL The expression in the placeholder gets passed to the function fetch in this case.
@@ -210,19 +207,35 @@ class DBHelper {
     // // RL .catch(error => callback(`Request failed. Returned status of ${error,statusText}`, null));
     // .catch(error => callback(error, null));
 
+    // RL 3rd method
+    idbApp.addRestaurants(callback);
+    
     // RL 4th method
-
-
+    // RL return this.dbPromiseLz()
     }
   }
 
-// RL *********
 
-static fetchAndCacheRestaurantsLz() {
+static fetchRestaurants() {
+  return this.dbPromise()
+    .then(db => {
+      const tx = db.transaction('restaurants');
+      const restaurantStore = tx.objectStore('restaurants');
+      return restaurantStore.getAll();
+    })
+    .then(restaurants => {
+      if (restaurants.length !== 0) {
+        return Promise.resolve(restaurants);
+        }
+      return this.fetchAndCacheRestaurants();
+    })
+}
+
+static fetchAndCacheRestaurants() {
   return fetch(DBHelper.DATABASE_URL + 'restaurants')
     .then(response => response.json())
     .then(restaurants => {
-      return this.dbPromiseLz()
+      return this.dbPromise()
         .then(db => {
           const tx = db.transaction('restaurants', 'readwrite');
           const restaurantStore = tx.objectStore('restaurants');
@@ -301,6 +314,7 @@ static fetchAndCacheRestaurantsLz() {
    */
   static fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, callback) {
     // Fetch all restaurants
+    debugger;
     DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
         callback(error, null);
@@ -395,6 +409,95 @@ static fetchAndCacheRestaurantsLz() {
       marker.addTo(self.newMap);
     return marker;
   }
+
+  static addReview(review) {
+    let offline_obj = {
+      name: 'addReview',
+      data: review,
+      object_type: 'review'
+    };
+    // RL Check if online
+    if (!navigator.onLine && (offline_obj.name === 'addReview')) {
+      DBHelper.sendDataWhenOnline(offline_obj);
+      return;
+    }
+    let reviewSend = {
+      "name": review.name,
+      "rating": parseInt(review.rating),
+      "comments": review.comments,
+      "restaurant_id": parseInt(review.restaurant_id)
+    };
+    console.log('Send review: ', reviewSend);
+    var fetch_options = {
+      method: 'POST',
+      body: JSON.stringify(reviewSend),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    };
+    fetch(`http://localhost:1337/reviews`, fetch_options).then((response) => {
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.indexOf('application/json') !== -1) {
+        return response.json();
+      } else { return 'API call successfull'}})
+    .then((data) => {console.log(`Fetch successfull`)})
+    .catch(error => console.log('error: ', error));
+  }
+
+  static sendDataWhenOnline(offline_obj) {
+    console.log('offline_obj = ', offline_obj);
+    localStorage.setItem('data', JSON.stringify(offline_obj.data));
+    console.log(`Local Storage: ${offline_obj.object_type} stored`);
+      window.addEventListener('online', (event) => {
+        console.log('Browser online again! Yay!');
+        let data = JSON.parse(localStorage.getItem('data'));
+        console.log('Update and clean UI');
+        [...document.querySelectorAll(".reviews_offline")]
+        .forEach(el => {
+          el.classList.remove("reviews_offline")
+          el.querySelector(".offline_label").remove()
+        });
+        if (data !== null) {
+          console.log(data);
+          if (offline_obj.name === 'addReview') {
+            DBHelper.addReview(offline_obj.data);
+          }
+
+          console.log('LocalState: data sent to API');
+
+          localStorage.removeItem('data');
+          console.log(`Local Stoarage: ${offline_obj.object_type} removed`);
+        }
+      });
+    }
+
+
+  // RL Add for Stage3
+  static updateFavoriteStatus(restaurantId, isFavorite) {
+  console.log('Changing status to: ', isFavorite);
+  fetch(`http://localhost:1337/restaurants/${restaurantId}/?is_favorite=${isFavorite}`, {
+    method: 'PUT'
+    })
+    .then(() => {
+    console.log('Changed');
+    this.dbPromise()
+      .then(db => {
+        const tx = db.transaction('restaurants', 'readwrite');
+        const restaurantsStore = tx.objectStore('restaurants');
+        restaurantsStore.get(restaurantId)
+          .then(restaurant => {
+            restaurant.is_favorite = isFavorite;
+            restaurantsStore.put(restaurant);
+          });
+      })
+    })
+  }
+
+
+
+
+
+
   /* static mapMarkerForRestaurant(restaurant, map) {
     const marker = new google.maps.Marker({
       position: restaurant.latlng,

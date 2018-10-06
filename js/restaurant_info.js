@@ -122,8 +122,11 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
   }
+
   // fill reviews
-  fillReviewsHTML();
+  console.log('Populate reviews');
+  DBHelper.fetchReviewsByRestId(restaurant.id)
+    .then(reviews => fillReviewsHTML(reviews))
 }
 
 /**
@@ -152,6 +155,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
  * Create all reviews HTML and add them to the webpage.
  */
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+  console.log('reviews = ', reviews);
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
@@ -159,12 +163,13 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
 
   if (!reviews) {
     const noReviews = document.createElement('p');
+    noReviews.id = 'no-review';
     noReviews.innerHTML = 'No reviews yet!';
     container.appendChild(noReviews);
     return;
   }
   const ul = document.getElementById('reviews-list');
-  reviews.forEach(review => {
+  reviews.reverse().forEach(review => {
     ul.appendChild(createReviewHTML(review));
   });
   container.appendChild(ul);
@@ -175,15 +180,21 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
+  if (!navigator.onLine) {
+    const connection_status.classList.add('offline_label')
+    const connection_status.innerHTML = "Offline"
+    li.classList.add("reviews_offline")
+    li.appendChild(connection_status);
+  }
+
   const name = document.createElement('p');
-  name.innerHTML = review.name;
-
+  name.innerHTML = `Name: ${review.name}`;
   /* RL TODO Add className to format CSS. */
-
   li.appendChild(name);
 
   const date = document.createElement('p');
-  date.innerHTML = review.date;
+  // RL stage2 date.innerHTML = review.date;
+  date.innerHTML = `Date: ${new Date(review.createdAt).toLocaleString() }`;
   li.appendChild(date);
 
   const rating = document.createElement('p');
@@ -193,8 +204,31 @@ createReviewHTML = (review) => {
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
   li.appendChild(comments);
-
   return li;
+}
+
+// RL Stage3 form validation & submission
+addReview = () => {
+  event.preventDefault();
+  // RL Get data from form
+  let restaurantId = getParameterByName('id');
+  let name = document.getElementById('review-author').value;
+  let rating = document.querySelector('#rating_select option:checked').value;
+  let comments = document.getElementById('review-comments').value;
+  const review = [name, rating, comments, restaurantId];
+  
+  // RL Add data to DOM
+  const frontEndReview = {
+    restaurant_id: parseInt(review[3]),
+    rating: parseInt(review[1]),
+    name: review[0],
+    comments: review[2].substring(0, 300),
+    createdAt: new Date()
+  };
+  // RL Send review to backend
+  DBHelper.addReview(frontEndReview);
+  addReviewHTML(frontEndReview);
+  document.getElementById('review-form').reset();
 }
 
 /**

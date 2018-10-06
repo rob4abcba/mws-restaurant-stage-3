@@ -10,9 +10,10 @@ var markers = []
 console.log('Fetch neighborhoods and cuisines as soon as the page is loaded.');
 console.log('Before document.addEventListener: ');
 document.addEventListener('DOMContentLoaded', (event) => {
-  initMap(); // added
+  // RL initMap(); // added
   fetchNeighborhoods();
   fetchCuisines();
+  initMap(); // added
 });
 
 /**
@@ -125,6 +126,8 @@ updateRestaurants = () => {
   const cuisine = cSelect[cIndex].value;
   const neighborhood = nSelect[nIndex].value;
 
+  debugger;
+
   DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
     if (error) { // Got an error!
       // RL Change next line
@@ -178,6 +181,8 @@ createRestaurantHTML = (restaurant) => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+
+
   /**
    * RL Give alt text to image
    */
@@ -187,6 +192,10 @@ createRestaurantHTML = (restaurant) => {
   image.alt = "photo of " + restaurant.name + " restaurant";
   console.log('RL4: image.alt: ', image.alt);
 
+
+  // RL Italiren yong IntersectionObserver here between image.alt and li.append(image)
+
+
   li.append(image);
 
 
@@ -194,14 +203,24 @@ createRestaurantHTML = (restaurant) => {
  * RL Change h1 to h3 for restaurant.name.
  */
   const name = document.createElement('h3');
-
   name.innerHTML = restaurant.name;
-
-
-
-
-
   li.append(name);
+
+
+  // RL Stage3 Add favorite
+  const favorite = document.createElement('button');
+  favorite.innerHTML = '♥';
+  favorite.classList.add("fav_btn");
+  // RL Toggle favorite status on click
+  favorite.onclick = function() {
+    const isFavNow = !restaurant.is_favorite;
+    DBHelper.updateFavoriteStatus(restaurant.id, isFavNow);
+    restaurant.is_favorite = !restaurant.is_favorite
+    changeFavElementClass(favorite, restaurant.is_favorite)
+  };
+  changeFavElementClass(favorite, restaurant.is_favorite)
+  li.append(favorite);
+
 
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;
@@ -218,6 +237,20 @@ createRestaurantHTML = (restaurant) => {
   li.append(more)
 
   return li
+}
+
+// RL Stage3
+changeFavElementClass = (el, fav) => {
+  if (!fav) {
+    el.classList.remove('favorite_yes');
+    el.classList.add('favorite_no');
+    el.setAttribute('aria-label', 'mark as favorite');
+  } else {
+    console.log('toggle yes upd');
+    el.classList.remove('favorite_no');
+    el.classList.add('favorite_yes');
+    el.setAttribute('aria-label', 'remove as favorite');
+  }
 }
 
 /**
