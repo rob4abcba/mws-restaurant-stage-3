@@ -117,7 +117,7 @@ class DBHelper {  // RL Closing } at very end of file??
     // RL stage1 return `http://localhost:${port}/data/restaurants.json`;
     // RL stage2 return `http://localhost:${port}/restaurants`;
     // RL stage3 remove the restaurants endpt bec it could be reviews endpt.
-    return `http://localhost:${port}/`; 
+    return `http://localhost:${port}/restaurants`; 
   }
 
   // RL TODO Add static get DATABASE_REVIEWS_URL() here. (RL: For stage3?)
@@ -155,10 +155,8 @@ class DBHelper {  // RL Closing } at very end of file??
 
 
   // RL TODO Will need to also pass id as a parameter to function fetchRestaurants.
-  static fetchRestaurants1(callback) {
+  static fetchRestaurants(callback) {
     // RL First check whether we have restaurants data already in indexedDB
-    console.log("restaurants = ",window.restaurants);
-    if (!window.restaurants) {
   // RL If no restaurants yet, then fetch restaurant JSON from the sails server
   // RL 1st method
   /* RL Comment out this entire xhr block and replace with fetch block
@@ -212,11 +210,11 @@ class DBHelper {  // RL Closing } at very end of file??
     
     // RL 4th method
     // RL return this.dbPromiseLz()
-    }
+
   }
 
 
-static fetchRestaurants() {
+static fetchRestaurants1() {
   return this.dbPromise()
     .then(db => {
       // RL debugger;
@@ -544,8 +542,6 @@ static fetchReviewsByRestId(id) {
   } */
 
 // RL }  // RL Why this } not show where matching { is ?
-console.log("At bottom of dbhelper.js");
-console.log("fetchRestaurants => ", DBHelper.fetchRestaurants());
 
 // RL TODO Add static getStaticAllRestaurantsMapImage(restaurants)
 // RL TODO Add static addPendingRequestToQueue(url, method, body)

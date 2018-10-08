@@ -7,8 +7,6 @@ var markers = []
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
-console.log('Fetch neighborhoods and cuisines as soon as the page is loaded.');
-console.log('Before document.addEventListener: ');
 document.addEventListener('DOMContentLoaded', (event) => {
   initMap(); // added
   fetchNeighborhoods();
@@ -28,9 +26,7 @@ fetchNeighborhoods = () => {
       console.log(error);
     } else {
       self.neighborhoods = neighborhoods;
-      console.log('Before fillNeighborhoodsHTML(); ');
       fillNeighborhoodsHTML();
-      console.log('After fillNeighborhoodsHTML(); ');
     }
   });
 }
