@@ -76,6 +76,7 @@ fetchRestaurantFromURL = (callback) => {
     callback(error, null);
   } else {
     console.log('Before DBHelper.fetchRestaurantById: ');
+    // RL debugger;
     DBHelper.fetchRestaurantById(id, (error, restaurant) => {
       self.restaurant = restaurant;
       if (!restaurant) {
@@ -125,6 +126,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 
   // fill reviews
   console.log('Populate reviews');
+  debugger;
   DBHelper.fetchReviewsByRestId(restaurant.id)
     .then(reviews => fillReviewsHTML(reviews))
 }
@@ -181,8 +183,9 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
 createReviewHTML = (review) => {
   const li = document.createElement('li');
   if (!navigator.onLine) {
-    const connection_status.classList.add('offline_label')
-    const connection_status.innerHTML = "Offline"
+    const connection_status = document.createElement('p');
+    connection_status.classList.add('offline_label')
+    connection_status.innerHTML = "Offline"
     li.classList.add("reviews_offline")
     li.appendChild(connection_status);
   }
@@ -229,6 +232,12 @@ addReview = () => {
   DBHelper.addReview(frontEndReview);
   addReviewHTML(frontEndReview);
   document.getElementById('review-form').reset();
+}
+
+addReviewHTML = (review) => {
+  if (document.getElementById('no-review')) {
+    document.getElementById('no-review').remove();
+  }
 }
 
 /**

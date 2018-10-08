@@ -97,12 +97,12 @@ var idbApp = (function() {
     getByID: getByID,
     getAll: getAll
   };
-})(); // RL Why first ) not show where matching ( is?
+} ) (); // RL Why first ) not show where matching ( is?
 
 
 // RL *************************************************
 
-class DBHelper {
+class DBHelper {  // RL Closing } at very end of file??
 
 
   /**
@@ -219,6 +219,7 @@ class DBHelper {
 static fetchRestaurants() {
   return this.dbPromise()
     .then(db => {
+      // RL debugger;
       const tx = db.transaction('restaurants');
       const restaurantStore = tx.objectStore('restaurants');
       return restaurantStore.getAll();
@@ -272,6 +273,8 @@ static fetchAndCacheRestaurants() {
     // }); // RL TODO Might need id here
 
     idbApp.getByID(id)
+
+
       .then((restaurant) => callback(null, restaurant));
   }
 
@@ -314,7 +317,7 @@ static fetchAndCacheRestaurants() {
    */
   static fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, callback) {
     // Fetch all restaurants
-    debugger;
+    // RL debugger;
     DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
         callback(error, null);
@@ -494,7 +497,38 @@ static fetchAndCacheRestaurants() {
   }
 
 
+// RL Put here for now
 
+static fetchReviewsByRestId(id) {
+  return fetch(`${DBHelper.DATABASE_URL}reviews/?restaurant_id=${id}`)
+  .then(response => response.json())
+  .then(reviews => {
+    this.dbPromise()
+    .then(db => {
+      if (!db) return;
+      let tx = db.transaction('reviews', 'readwrite');
+        const store = tx.objectStore('reviews');
+        if (Array.isArray(reviews)) {
+          reviews.forEach(function(review) {
+            store.put(review);
+          });
+        } else {
+          store.put(reviews);
+        }
+        });
+    console.log('Restaurant reviews are: ', reviews);
+    return Promise.resolve(reviews);
+})
+  .catch(error => {
+    return DBHelper.getStoredObjectById('reviews', 'restaurant', id)
+    .then((storedReviews) => {
+      console.log('Look for offline stored reviews');
+      return Promise.resolve(storedReviews);
+    })
+  });
+    }
+
+}  // RL This is the closing } of class DBHelper ??
 
 
 
@@ -509,7 +543,7 @@ static fetchAndCacheRestaurants() {
     return marker;
   } */
 
-}  // RL Why this } not show where matching { is ?
+// RL }  // RL Why this } not show where matching { is ?
 console.log("At bottom of dbhelper.js");
 console.log("fetchRestaurants => ", DBHelper.fetchRestaurants());
 
@@ -523,5 +557,4 @@ console.log("fetchRestaurants => ", DBHelper.fetchRestaurants());
 // RL TODO Add static saveNewReview(id, bodyObj, callback)
 // RL TODO Add static handleFavoriteClick(id, newState)
 // RL TODO Add static saveReview(id, name, rating, comment, callback)
-
 

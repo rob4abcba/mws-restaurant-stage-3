@@ -10,10 +10,10 @@ var markers = []
 console.log('Fetch neighborhoods and cuisines as soon as the page is loaded.');
 console.log('Before document.addEventListener: ');
 document.addEventListener('DOMContentLoaded', (event) => {
-  // RL initMap(); // added
+  initMap(); // added
   fetchNeighborhoods();
   fetchCuisines();
-  initMap(); // added
+  // RL initMap(); // added
 });
 
 /**
@@ -126,7 +126,7 @@ updateRestaurants = () => {
   const cuisine = cSelect[cIndex].value;
   const neighborhood = nSelect[nIndex].value;
 
-  debugger;
+  // RL debugger;
 
   DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
     if (error) { // Got an error!
