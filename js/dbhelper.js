@@ -40,7 +40,8 @@ var idbApp = (function() {
   // RL NS about these below
   // add restaurants to database
   function addRestaurants(callback) {
-    fetch(DBHelper.DATABASE_URL)
+    // RL Stage2 included /restaurants in DATABASE_URL ... fetch(DBHelper.DATABASE_URL)
+    fetch(DBHelper.DATABASE_URL + 'restaurants')
       .then(response => response.json())
       .then(function(restaurants) {
       console.log('successfully pulled restaurants json data')
@@ -117,7 +118,8 @@ class DBHelper {  // RL Closing } at very end of file??
     // RL stage1 return `http://localhost:${port}/data/restaurants.json`;
     // RL stage2 return `http://localhost:${port}/restaurants`;
     // RL stage3 remove the restaurants endpt bec it could be reviews endpt.
-    return `http://localhost:${port}/restaurants`; 
+    return `http://localhost:${port}/`; 
+    // RL Later on will use ... fetch(`${DBHelper.DATABASE_URL}reviews/?restaurant_id=${id}`)
   }
 
   // RL TODO Add static get DATABASE_REVIEWS_URL() here. (RL: For stage3?)
