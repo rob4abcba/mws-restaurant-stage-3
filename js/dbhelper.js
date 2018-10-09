@@ -499,6 +499,16 @@ static fetchAndCacheRestaurants() {
 
 // RL Put here for now
 
+static getStoredObjectById(table, idx, id) {
+  return this.dbPromise()
+    .then(function(db) {
+      if (!db) return;
+      const store = db.transaction(table).objectStore(table);
+      const indexId = store.index(idx);
+      return indexId.getAll(id);
+  });
+}
+
 static fetchReviewsByRestId(id) {
   return fetch(`${DBHelper.DATABASE_URL}reviews/?restaurant_id=${id}`)
   .then(response => response.json())
@@ -527,6 +537,10 @@ static fetchReviewsByRestId(id) {
     })
   });
     }
+
+
+
+
 
 }  // RL This is the closing } of class DBHelper ??
 
