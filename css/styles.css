@@ -419,6 +419,26 @@ ntainer {
 }
 
 
+/* RL Change appearance when toggle isFavorite. */
+.isFavorite {
+    width: 100%;
+    padding: 25px;
+    background-color: coral;
+    color: white;
+    font-size: 25px;
+    box-sizing: border-box;
+}
+
+.favorite_yes {
+    color: red;
+}
+
+.favorite_no {
+    color: black;
+}
+
+
+
 /* RL Skip link starts off-screen -40px and only gets on-screen 0px after it gains focus. */
 .skip-link {
   position: absolute;

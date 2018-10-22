@@ -105,14 +105,14 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   image.alt = "photo of " + restaurant.name + " restaurant";
 
   console.log('image.alt = ', image.alt);
-  window.alert('image.alt = ' + image.alt);
+  // RL window.alert('image.alt = ' + image.alt);
 
 
   /* RL Not sure about next line I added. */
   name.append(address);
   
   console.log('name = ', name);
-  window.alert('name = ' + name);
+  // RL window.alert('name = ' + name);
 
   /* RL TODO Add code for responsive image sizing. */
 
@@ -126,7 +126,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 
   // fill reviews
   console.log('Populate reviews');
-  debugger;
+  // RL debugger;
   DBHelper.fetchReviewsByRestId(restaurant.id)
     .then(reviews => fillReviewsHTML(reviews))
 }

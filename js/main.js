@@ -203,20 +203,47 @@ createRestaurantHTML = (restaurant) => {
   li.append(name);
 
 
-  // RL Stage3 Add favorite
+  // RL Stage3 Add favorite - LZ
   const favorite = document.createElement('button');
   favorite.innerHTML = '♥';
+  /*
+  favorite.innerHTML = isFavorite
+    ? restaurant.name + "is a favorite"
+    : restaurant.name + "is not a favorite"
+    */
   favorite.classList.add("fav_btn");
   // RL Toggle favorite status on click
+  // RL debugger;
   favorite.onclick = function() {
     const isFavNow = !restaurant.is_favorite;
     DBHelper.updateFavoriteStatus(restaurant.id, isFavNow);
     restaurant.is_favorite = !restaurant.is_favorite
     changeFavElementClass(favorite, restaurant.is_favorite)
+
+    // RL From w3schools https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_toggle_class
+    // RL element.classList.toggle("isFavorite");
+
   };
   changeFavElementClass(favorite, restaurant.is_favorite)
   li.append(favorite);
 
+/*
+  // RL Stage3 Add favorite - DB
+  const isFavorite = (restaurant["is_favorite"] && restaurant["is_favorite"].toString() === "true") ? true : false;
+  const favoriteDiv = document.createElement("div");
+  favoriteDiv.className = "favorite-icon";
+  const favorite = document.createElement('button'); // RL: Both LZ and DB req button
+  favorite.style.background = isFavorite
+    ? 'url("icons/002-like.svg") no-repeat'
+    : 'url("icons/001-like-1.svg") no-repeat'
+  favorite.innerHTML = isFavorite
+    ? restaurant.name + "is a favorite"
+    : restaurant.name + "is not a favorite"
+  favorite.id = "favorite-icon" + restaurant.id;
+  favorite.onclick = event => handleFavoriteClick(restaurant.id, !isFavorite);
+  favoriteDiv.append(favorite);
+  div.append(favoriteDiv);
+*/
 
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;
@@ -241,11 +268,13 @@ changeFavElementClass = (el, fav) => {
     el.classList.remove('favorite_yes');
     el.classList.add('favorite_no');
     el.setAttribute('aria-label', 'mark as favorite');
+    // RL favorite.innerHTML = '♥ Favorite? Yes';
   } else {
     console.log('toggle yes upd');
     el.classList.remove('favorite_no');
     el.classList.add('favorite_yes');
     el.setAttribute('aria-label', 'remove as favorite');
+    // RL favorite.innerHTML = '♥ Favorite? No';
   }
 }
 

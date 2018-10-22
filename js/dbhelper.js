@@ -477,7 +477,8 @@ static fetchAndCacheRestaurants() {
 
   // RL Add for Stage3
   static updateFavoriteStatus(restaurantId, isFavorite) {
-  console.log('Changing status to: ', isFavorite);
+    // RL debugger;
+  console.log('Changing status of isFavorite to: ', isFavorite);
   fetch(`http://localhost:1337/restaurants/${restaurantId}/?is_favorite=${isFavorite}`, {
     method: 'PUT'
     })
@@ -489,7 +490,7 @@ static fetchAndCacheRestaurants() {
         const restaurantsStore = tx.objectStore('restaurants');
         restaurantsStore.get(restaurantId)
           .then(restaurant => {
-            restaurant.is_favorite = isFavorite;
+            // RL restaurant.is_favorite = isFavorite;
             restaurantsStore.put(restaurant);
           });
       })
