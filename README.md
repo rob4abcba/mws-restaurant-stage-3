@@ -25,13 +25,11 @@ AFter connecting my application to the external database, I added new features t
 
 ### What do I do from here?
 
-1. In this mws-restaurant-stage-3 folder, start up a simple HTTP server to serve up the site files on your local computer. Python has some simple tools to do this, and you don't even need to know Python. For most people, it's already installed on your computer. 
-
-In a terminal, check the version of Python you have: `python -V`. If you have Python 2.x, spin up the server with `python -m SimpleHTTPServer 8000` (or some other port, if port 8000 is already in use.) For Python 3.x, you can use `python3 -m http.server 8000`. If you don't have Python installed, navigate to Python's [website](https://www.python.org/) to download and install the software.
+1. In this mws-restaurant-stage-3 folder, start up a simple HTTP server to serve up the site files on your local computer. Python has some simple tools to do this, and you don't even need to know Python. For most people, it's already installed on your computer. In a terminal, check the version of Python you have: `python -V`. If you have Python 2.x, spin up the server with `python -m SimpleHTTPServer 8000` (or some other port, if port 8000 is already in use.) For Python 3.x, you can use `python3 -m http.server 8000`. If you don't have Python installed, navigate to Python's [website](https://www.python.org/) to download and install the software.
 
 2. Meanwhile in the mws-restaurant-stage-3-server folder, follow the commands from that [README](https://github.com/rob4abcba/mws-restaurant-stage-3-server/blob/master/README.md).
 
-3. With your server running, visit the site: `http://localhost:8000`, and look around for a bit to see what the current experience looks like.
+3. With your server running, visit the site: `http://localhost:8000`.  My goal was to make the use of the site self-explanatory and intuitive.  The user should clearly see the drop down boxes and intuitively know to select the Neighborhood and/or the Cuisine Type to see restaurants that fit his/her criteria.  When you see a restaurant that looks interesting, you can click on it to see more detail about that restaurant.
 
 
 ## Leaflet.js and Mapbox:
