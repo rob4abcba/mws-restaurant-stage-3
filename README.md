@@ -5,7 +5,11 @@
 
 ## Project Overview: Stage 3
 
-For the **Restaurant Reviews** projects, I incrementally converted a static webpage to a mobile-ready web application. In **Stage One**, I took a static design that lacked accessibility and converted the design to be responsive on different sized displays and accessible for screen reader use. I also added a service worker to begin the process of creating a seamless offline experience for my users.
+For the **Restaurant Reviews** projects, I incrementally converted a static webpage to a mobile-ready web application. 
+
+In **Stage One**, I took a static design that lacked accessibility and converted the design to be responsive on different sized displays and accessible for screen reader use. I also added a service worker to begin the process of creating a seamless offline experience for my users.
+
+In **Stage Two**, I took the responsive, accessible design that I built in Stage One and connected it to an external server. I began by using asynchronous JavaScript to request JSON data from the server. I store data received from the server in an offline database using IndexedDB, which creates an app shell architecture. Finally, I optimized my site to meet performance benchmarks, which I tested using Lighthouse.
 
 In **Stage Three**, I took the connected application that I built in Stage One and Stage Two and added additional functionality. I added a form to allow users to create their own reviews. If the app is offline, the form will defer updating to the remote database until a connection is established. Finally, I optimized the site to meet even stricter performance benchmarks than the previous stages, and tested again using Lighthouse.
 
@@ -13,6 +17,14 @@ In **Stage Three**, I took the connected application that I built in Stage One a
 ### Specification
 
 In **Stage One**, we were provided the code for a restaurant reviews website. The code had a lot of issues. It was barely usable on a desktop browser, much less a mobile device. It also didn’t include any standard accessibility features, and it didn’t work offline at all. Our job was to update the code to resolve these issues while still maintaining the included functionality. 
+
+In Stage **Two**, we were provided code for a Node development server and a README for getting the server up and running locally on our computer. That README contains the API we need to make JSON requests to the server. Once I had the server up, I began the work of improving my Stage One project code.
+
+The core functionality of the application did not change for this stage. Only the source of the data changed. I used the fetch() API to make requests to the server to populate the content of my Restaurant Reviews app.
+
+In Stage Two, I use server data instead of local memory. In the first version of the application, all of the data for the restaurants was stored in the local application. In Stage Two, I pull all of the data from the server instead, and use the response data to generate the restaurant information on the main page and the detail page.
+
+I used IndexedDB to cache JSON responses. In order to maintain offline use with the development server, I update the service worker to store the JSON received by our requests using the IndexedDB API. As with Stage One, any page that has been visited by the user is made available offline, with data pulled from the shell database.
 
 In **Stage Three**, we were provided code for an updated Node development server and a README for getting the server up and running locally on our computer. The README also contained the API we needed to make JSON requests to the server. Once I had the server up, I began the work of improving my Stage Two project code.
 
