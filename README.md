@@ -26,7 +26,7 @@ In Stage Two, I use server data instead of local memory. In the first version of
 
 I used IndexedDB to cache JSON responses. In order to maintain offline use with the development server, I update the service worker to store the JSON received by our requests using the IndexedDB API. As with Stage One, any page that has been visited by the user is made available offline, with data pulled from the shell database.
 
-In **Stage Three**, we were provided code for an updated Node development server and a README for getting the server up and running locally on our computer. The README also contained the API we needed to make JSON requests to the server. Once I had the server up, I began the work of improving my Stage Two project code.
+In **Stage Three**, we were provided code for an **updated** Node development server and a README for getting the server up and running locally on our computer. The README also contained the API we needed to make JSON requests to the server. Once I had the server up, I began the work of improving my Stage Two project code.
 
 This Stage Three server has added capabilities and thus is different from the Stage Two server. The commands to connect to this Stage Three server are the same as with Stage Two.  The only difference is you execute the commands in the Stage Three folder instead of the Stage Two folder.
 
