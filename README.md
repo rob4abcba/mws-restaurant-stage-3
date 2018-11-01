@@ -16,22 +16,23 @@ In **Stage One**, we were provided the code for a restaurant reviews website. Th
 
 In **Stage Three**, we were provided code for an updated Node development server and a README for getting the server up and running locally on our computer. The README also contained the API we needed to make JSON requests to the server. Once I had the server up, I began the work of improving my Stage Two project code.
 
-This Stage Three server is different than the server from stage 2, and has added capabilities. Connecting to this server is the same as with Stage Two, however.
+This Stage Three server has added capabilities and thus is different from the Stage Two server. The commands to connect to this Stage Three server are the same as with Stage Two.  The only difference is you execute the commands in the Stage Three folder instead of the Stage Two folder.
 
-The documentation for the new server is in the README file for the server.
+The documentation for the new server is in the [README](https://github.com/rob4abcba/mws-restaurant-stage-3-server/blob/master/README.md) file for the server.
 
 AFter connecting my application to the external database, I added new features to my app.
 
 
 ### What do I do from here?
 
-1. In this folder, start up a simple HTTP server to serve up the site files on your local computer. Python has some simple tools to do this, and you don't even need to know Python. For most people, it's already installed on your computer. 
+1. In this mws-restaurant-stage-3 folder, start up a simple HTTP server to serve up the site files on your local computer. Python has some simple tools to do this, and you don't even need to know Python. For most people, it's already installed on your computer. 
 
 In a terminal, check the version of Python you have: `python -V`. If you have Python 2.x, spin up the server with `python -m SimpleHTTPServer 8000` (or some other port, if port 8000 is already in use.) For Python 3.x, you can use `python3 -m http.server 8000`. If you don't have Python installed, navigate to Python's [website](https://www.python.org/) to download and install the software.
 
-2. With your server running, visit the site: `http://localhost:8000`, and look around for a bit to see what the current experience looks like.
-3. Explore the provided code, and start making a plan to implement the required features in three areas: responsive design, accessibility and offline use.
-4. Write code to implement the updates to get this site on its way to being a mobile-ready website.
+2. Meanwhile in the mws-restaurant-stage-3-server folder, follow the commands from that [README](https://github.com/rob4abcba/mws-restaurant-stage-3-server/blob/master/README.md).
+
+3. With your server running, visit the site: `http://localhost:8000`, and look around for a bit to see what the current experience looks like.
+
 
 ## Leaflet.js and Mapbox:
 
