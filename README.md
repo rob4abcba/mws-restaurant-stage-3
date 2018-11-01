@@ -20,10 +20,19 @@ This Stage Three server has added capabilities and thus is different from the St
 
 The documentation for the new server is in the [README](https://github.com/rob4abcba/mws-restaurant-stage-3-server/blob/master/README.md) file for the server.
 
-AFter connecting my application to the external database, I added new features to my app.
+After connecting my application to the external database, I added new features to my app.
 
+In **Stage Three**, I added a form to allow users to create their own reviews: In previous versions of the application, users could only read reviews from the database. I added a form that adds new reviews to the database. The form includes the user’s name, the restaurant id, the user’s rating, and whatever comments they have. Submitting the form updates the server when the user is online.
 
-### What do I do from here?
+I added functionality to defer updates until the user is connected: If the user is not online, the app notifies the user that they are not connected, and saves the users' data to submit automatically when re-connected. In this case, the review is deferred and sent to the server when connection is re-established (but the review is still visible locally even before it gets to the server.)
+
+The code meets higher performance requirements: In addition to adding new features, the performance targets from Stage Two are now even higher in Stage Three. Using Lighthouse, I measured my site performance against the new targets.
+
+Progressive Web App score should be at 90 or better.
+Performance score should be at 90 or better.
+Accessibility score should be at 90 or better.
+
+### What do you do from here?
 
 1. In this mws-restaurant-stage-3 folder, start up a simple HTTP server to serve up the site files on your local computer. Python has some simple tools to do this, and you don't even need to know Python. For most people, it's already installed on your computer. In a terminal, check the version of Python you have: `python -V`. If you have Python 2.x, spin up the server with `python -m SimpleHTTPServer 8000` (or some other port, if port 8000 is already in use.) For Python 3.x, you can use `python3 -m http.server 8000`. If you don't have Python installed, navigate to Python's [website](https://www.python.org/) to download and install the software.
 
@@ -39,14 +48,3 @@ This repository uses [leafletjs](https://leafletjs.com/) with [Mapbox](https://w
 ### Note about ES6
 
 Most of the code in this project has been written to the ES6 JavaScript specification for compatibility with modern web browsers and future proofing JavaScript code. As much as possible, try to maintain use of ES6 in any additional JavaScript you write. 
-
-In **Stage Three**, I added a form to allow users to create their own reviews: In previous versions of the application, users could only read reviews from the database. I added a form that adds new reviews to the database. The form includes the user’s name, the restaurant id, the user’s rating, and whatever comments they have. Submitting the form updates the server when the user is online.
-
-I added functionality to defer updates until the user is connected: If the user is not online, the app notifies the user that they are not connected, and saves the users' data to submit automatically when re-connected. In this case, the review is deferred and sent to the server when connection is re-established (but the review is still visible locally even before it gets to the server.)
-
-The code meets higher performance requirements: In addition to adding new features, the performance targets from Stage Two are now even higher in Stage Three. Using Lighthouse, I measured my site performance against the new targets.
-
-Progressive Web App score should be at 90 or better.
-Performance score should be at 90 or better.
-Accessibility score should be at 90 or better.
-
