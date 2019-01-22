@@ -1,9 +1,9 @@
-# Mobile Web Specialist
+# Mobile Web Specialist (MWS)
 ---
-#### _Three Stage Project - Restaurant Reviews_
+## Restaurant Reviews Mobile Web App
 
 
-## Project Overview: Stage 3
+### Project Overview (Stages 1, 2, and 3)
 
 For the **Restaurant Reviews** projects, I incrementally converted a static webpage to a mobile-ready web application. 
 
@@ -14,7 +14,7 @@ In **Stage Two**, I took the responsive, accessible design that I built in Stage
 In **Stage Three**, I took the connected application that I built in Stage One and Stage Two and added additional functionality. I added a form to allow users to create their own reviews. If the app is offline, the form will defer updating to the remote database until a connection is established. Finally, I optimized the site to meet even stricter performance benchmarks than the previous stages, and tested again using Lighthouse.
 
 
-### Specification
+### Specification (Stages 1, 2, and 3)
 
 In **Stage One**, we were provided the code for a restaurant reviews website. The code had a lot of issues. It was barely usable on a desktop browser, much less a mobile device. It also didn’t include any standard accessibility features, and it didn’t work offline at all. Our job was to update the code to resolve these issues while still maintaining the included functionality. 
 
@@ -53,7 +53,7 @@ Accessibility score should be at 90 or better.
 3. With your server running, visit the site: `http://localhost:8000`.  My goal was to make the use of the site self-explanatory and intuitive.  The user should clearly see the drop down boxes and intuitively know to select the Neighborhood and/or the Cuisine Type to see restaurants that fit his/her criteria.  When you see a restaurant that looks interesting, you can click on it to see more detail about that restaurant.
 
 
-## Leaflet.js and Mapbox:
+### Leaflet.js and Mapbox:
 
 This repository uses [leafletjs](https://leafletjs.com/) with [Mapbox](https://www.mapbox.com/). You need to replace `<your MAPBOX API KEY HERE>` with a token from [Mapbox](https://www.mapbox.com/). Mapbox is free to use, and does not require any payment information. 
 
