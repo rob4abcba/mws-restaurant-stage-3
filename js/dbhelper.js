@@ -32,7 +32,8 @@ var idbApp = (function() {
         // RL upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
       case 1:
         //RL debugger;
-        console.log('case 1: Creating the restaurant review object store');
+        console.log('case 1: Creating the restaurant-review object store');
+        // RL console.log('id = ', id);
         upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
     }
   });
@@ -139,11 +140,13 @@ class DBHelper {  // RL Closing } at very end of file??
           // execute when the database is first created
           // (oldVersion is 0)
           // RL debugger;
-          // RL console.log('case 0');
+          console.log('case 0');
+          // RL console.log('id = ', id);
           upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
         case 1:
           //RL debugger;
-          // RL console.log('case 1');
+          console.log('case 1');
+          // RL console.log('id = ', id);
           const reviewsStore = upgradeDb.createObjectStore('reviews', {keyPath: 'id'});
           // RL From https://developer.mozilla.org/en-US/docs/Web/API/IDBObjectStore/createIndex
           reviewsStore.createIndex('restaurant', 'restaurant_id');
@@ -484,13 +487,24 @@ static fetchAndCacheRestaurants() {
     })
     .then(() => {
     console.log('Changed');
+    // RL debugger;
     this.dbPromise()
       .then(db => {
         const tx = db.transaction('restaurants', 'readwrite');
         const restaurantsStore = tx.objectStore('restaurants');
+        // RL debugger;
+        // RL console.log('Before: restaurantId = ', restaurantId);
+        console.log('restaurantId: ', restaurantId);
         restaurantsStore.get(restaurantId)
+        // RL MG Cannot put anything in here to separate above line from .then below??
+        // RL console.log('restaurantId: ', restaurantId);
+        // RL console.log('After: restaurantId = ', restaurantId);
+        // RL debugger;
           .then(restaurant => {
-            // RL restaurant.is_favorite = isFavorite;
+            // RL Uncomment this
+            // prowebsive: only try to modify property if restaurant exists in idb
+if (restaurant)
+            restaurant.is_favorite = isFavorite;
             restaurantsStore.put(restaurant);
           });
       })
