@@ -33,7 +33,6 @@ const initMap = () => {
       });
       L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
         // RL mapboxToken: '<your MAPBOX API KEY HERE>',
-        // mapboxToken: 'pk.eyJ1Ijoicm9iNGFiY2JhIiwiYSI6ImNqaXFqZzN5cTE5dm0zcXQ4N3FsZ2NtbGMifQ.ZSP-BO8phKgF0poYo62xaA',
         mapboxToken: SECRET.mapbox_key,
         maxZoom: 18,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
